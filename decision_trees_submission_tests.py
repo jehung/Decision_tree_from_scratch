@@ -57,7 +57,7 @@ class DecisionTreePart1Tests(unittest.TestCase):
         true_label = [1, 1, 1, 0, 0, 0, 0]
         test_matrix = [[1, 2], [1, 3]]
 
-        print(dt.confusion_matrix(answer, true_label))
+        #print(dt.confusion_matrix(answer, true_label))
         assert np.array_equal(test_matrix, dt.confusion_matrix(answer,
                                                                true_label))
 
@@ -111,7 +111,7 @@ class DecisionTreePart1Tests(unittest.TestCase):
 
             assert accuracy == ((index + 1) / total_count)
 
-'''
+
 class DecisionTreePart2Tests(unittest.TestCase):
     """Tests for Decision Tree Learning.
 
@@ -169,6 +169,7 @@ class DecisionTreePart2Tests(unittest.TestCase):
 
         gini_impurity = dt.gini_impurity([1, 1, 0, 0, 0, 0])
 
+        #print(gini_impurity)
         assert round(4. / 9., 3) == round(gini_impurity, 3)
 
     def test_gini_gain_max(self):
@@ -192,7 +193,8 @@ class DecisionTreePart2Tests(unittest.TestCase):
 
         gini_gain = dt.gini_gain([1, 1, 1, 0, 0, 0],
                                  [[1, 1, 0], [1, 0, 0]])
-        
+
+        print(gini_gain)
         assert -0.389 == round(gini_gain, 3)
 
     def test_gini_gain_restaurant_patrons(self):
@@ -220,7 +222,7 @@ class DecisionTreePart2Tests(unittest.TestCase):
             self.restaurant['split_food_type']), 2)
 
         assert gain_type == -1.5
-
+'''
     def test_decision_tree_all_data(self):
         """Test decision tree classifies all data correctly.
 

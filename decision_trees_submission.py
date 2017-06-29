@@ -198,17 +198,33 @@ def gini_impurity(class_vector):
     It reaches its minimum at zero when all elements of class_vector
     belong to the same class.
 
+    Note: gini impurity is an alternative calculation to
+    entropy, but without the calculation using log base 2.
+
+    Note: This implementation takes care of the possibility of
+    multi-class_labels (not just 0 or 1)
+
     Args:
         class_vector (list(int)): Vector of classes given as 0 or 1.
 
     Returns:
         Floating point number representing the gini impurity.
     """
-    raise NotImplemented()
+    a2 = 0
+    class_set = set(class_vector)
+    counter = Counter(class_vector)
+    for c in class_set:
+        a2 += (counter[c]/sum(counter.values()))**2
+
+    return float(1 - a2)
 
 
 def gini_gain(previous_classes, current_classes):
     """Compute the gini impurity gain between the previous and current classes.
+
+    Note: This implementation takes care of the cases where class labels are
+    more than binary.
+
     Args:
         previous_classes (list(int)): Vector of classes given as 0 or 1.
         current_classes (list(list(int): A list of lists where each list has
@@ -216,7 +232,20 @@ def gini_gain(previous_classes, current_classes):
     Returns:
         Floating point number representing the information gain.
     """
-    raise NotImplemented()
+
+    gini_current = 0
+
+    try:
+        all_classes = sum(previous_classes, [])
+    except:
+        all_classes = previous_classes
+
+    for i in range(len(current_classes)):
+        gini_current += 1*gini_impurity(current_classes[i])
+        print(i, gini_current)
+
+        print(gini_impurity(previous_classes))
+    return float(gini_impurity(previous_classes) - gini_current)
 
 
 class DecisionTree:
@@ -517,8 +546,11 @@ class Vectorization:
 
 
 ans = build_decision_tree()
-print(ans)
+#print(ans)
 
 dec = ans.decide([0,1,1,0])
-print(dec)
+#print(dec)
+
+impure = gini_impurity([1,0,0])
+#print(impure)
 
