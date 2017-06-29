@@ -41,11 +41,11 @@ class DecisionTreePart1Tests(unittest.TestCase):
         for index in range(0, len(self.ht_examples)):
             decision = self.hand_tree.decide(self.ht_examples[index])
 
-            print('index, decision', index, decision)
+            #print('index, decision', index, decision)
             assert decision == self.ht_classes[index]
 
 
-'''
+
     def test_confusion_matrix(self):
         """Test confusion matrix for the example tree.
 
@@ -57,6 +57,7 @@ class DecisionTreePart1Tests(unittest.TestCase):
         true_label = [1, 1, 1, 0, 0, 0, 0]
         test_matrix = [[1, 2], [1, 3]]
 
+        print(dt.confusion_matrix(answer, true_label))
         assert np.array_equal(test_matrix, dt.confusion_matrix(answer,
                                                                true_label))
 
@@ -110,7 +111,7 @@ class DecisionTreePart1Tests(unittest.TestCase):
 
             assert accuracy == ((index + 1) / total_count)
 
-
+'''
 class DecisionTreePart2Tests(unittest.TestCase):
     """Tests for Decision Tree Learning.
 

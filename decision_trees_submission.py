@@ -95,7 +95,6 @@ def build_decision_tree():
               [0, 0, 1, 1],
               [0, 0, 1, 0]]
 
-
     root = DecisionNode(None, None, lambda data: data[0] == 0)
     root.left = DecisionNode(None, None, lambda data: data[3] == 0)
     root.right = DecisionNode(None, None, None, 1)
@@ -122,9 +121,13 @@ def confusion_matrix(classifier_output, true_labels):
     Returns:
         A two dimensional array representing the confusion matrix.
     """
+    true_positive = sum(a1==b1 if b1==1 else False for a1, b1 in zip(classifier_output, true_labels))
+    true_negative = sum(a1==b1 if b1==0 else False for a1, b1 in zip(classifier_output, true_labels))
+    false_positive = sum(a1!=b1 if b1==0 else False for a1, b1 in zip(classifier_output, true_labels))
+    false_negative = sum(a1!=b1 if b1==1 else False for a1, b1 in zip(classifier_output, true_labels))
 
-    # TODO: finish this.
-    raise NotImplemented()
+    return [[true_positive, false_negative],
+         [false_positive, true_negative]]
 
 
 def precision(classifier_output, true_labels):
@@ -140,10 +143,12 @@ def precision(classifier_output, true_labels):
     Returns:
         The precision of the classifier output.
     """
+    true_positive = sum(a1 == b1 if b1 == 1 else False for a1, b1 in zip(classifier_output, true_labels))
+    #true_negative = sum(a1 == b1 if b1 == 0 else False for a1, b1 in zip(classifier_output, true_labels))
+    false_positive = sum(a1 != b1 if b1 == 0 else False for a1, b1 in zip(classifier_output, true_labels))
+    #false_negative = sum(a1 != b1 if b1 == 1 else False for a1, b1 in zip(classifier_output, true_labels))
 
-    # TODO: finish this.
-    raise NotImplemented()
-
+    return float(true_positive/ (true_positive + false_positive))
 
 def recall(classifier_output, true_labels):
     """Get the recall of a classifier compared to the correct values.
@@ -159,8 +164,12 @@ def recall(classifier_output, true_labels):
         The recall of the classifier output.
     """
 
-    # TODO: finish this.
-    raise NotImplemented()
+    true_positive = sum(a1 == b1 if b1 == 1 else False for a1, b1 in zip(classifier_output, true_labels))
+    #true_negative = sum(a1 == b1 if b1 == 0 else False for a1, b1 in zip(classifier_output, true_labels))
+    #false_positive = sum(a1 != b1 if b1 == 0 else False for a1, b1 in zip(classifier_output, true_labels))
+    false_negative = sum(a1 != b1 if b1 == 1 else False for a1, b1 in zip(classifier_output, true_labels))
+
+    return float(true_positive/ (true_positive + false_negative))
 
 
 def accuracy(classifier_output, true_labels):
@@ -176,9 +185,8 @@ def accuracy(classifier_output, true_labels):
     Returns:
         The accuracy of the classifier output.
     """
-
-    # TODO: finish this.
-    raise NotImplemented()
+    accurate = sum(a1 == b1 for a1, b1 in zip(classifier_output, true_labels))
+    return float(accurate/len(classifier_output))
 
 
 def gini_impurity(class_vector):
@@ -513,3 +521,4 @@ print(ans)
 
 dec = ans.decide([0,1,1,0])
 print(dec)
+
